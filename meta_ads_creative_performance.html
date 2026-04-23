@@ -1,0 +1,293 @@
+
+<h2 class="sr-only">Meta ads creative performance dashboard comparing Feb 20–Mar 20 vs Mar 20–Apr 19, broken down by format, product line, and top individual ads.</h2>
+
+<style>
+.dash { font-family: var(--font-sans); padding: 1rem 0; }
+.sec { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 10px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.mc { background: var(--color-background-secondary); border-radius: 8px; padding: 14px 16px; }
+.mc-label { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 4px; }
+.mc-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+.mc-sub { font-size: 11px; margin: 3px 0 0; }
+.up { color: #3B6D11; } .down { color: #A32D2D; } .neu { color: #888780; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 16px; }
+.chart-wrap { position: relative; width: 100%; }
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1.5rem 0; }
+.legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--color-text-secondary); }
+.ldot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.ad-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.ad-row:last-child { border-bottom: none; }
+.ad-name { font-size: 12px; color: var(--color-text-primary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ad-meta { font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+.badge { font-size: 10px; padding: 2px 7px; border-radius: 5px; flex-shrink: 0; }
+.b-green { background: #EAF3DE; color: #3B6D11; }
+.b-amber { background: #FAEEDA; color: #854F0B; }
+.b-red { background: #FCEBEB; color: #A32D2D; }
+.b-blue { background: #E6F1FB; color: #0C447C; }
+.b-gray { background: #F1EFE8; color: #5F5E5A; }
+.roas-bar-wrap { width: 80px; height: 6px; background: var(--color-background-secondary); border-radius: 3px; flex-shrink: 0; }
+.roas-bar { height: 6px; border-radius: 3px; }
+.insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0.5rem; }
+.ins { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 14px 16px; }
+.ins-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px; }
+.ins-body { font-size: 12px; color: var(--color-text-secondary); margin: 0; line-height: 1.6; }
+.ins-badge { font-size: 11px; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; display: inline-block; }
+.ib-ok { background: #EAF3DE; color: #3B6D11; }
+.ib-warn { background: #FAEEDA; color: #854F0B; }
+.ib-info { background: #E6F1FB; color: #0C447C; }
+</style>
+
+<div class="dash">
+
+<p class="sec">Overall performance — purchase-optimised ads only</p>
+<div class="grid4">
+  <div class="mc"><p class="mc-label">Total spend P1 (Feb 20–Mar 20)</p><p class="mc-val">$109k</p><p class="mc-sub neu">39 ads with purchases</p></div>
+  <div class="mc"><p class="mc-label">Total spend P2 (Mar 20–Apr 19)</p><p class="mc-val">$107k</p><p class="mc-sub neu">55 ads with purchases</p></div>
+  <div class="mc"><p class="mc-label">Best ROAS — P1</p><p class="mc-val">7.23x</p><p class="mc-sub neu">Stacks DPA carousel</p></div>
+  <div class="mc"><p class="mc-label">Best ROAS — P2</p><p class="mc-val">6.58x</p><p class="mc-sub neu">Stacks DPA carousel</p></div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <p class="sec" style="margin-bottom:8px;">Format performance — P1 (ROAS, avg)</p>
+    <div class="chart-wrap" style="height:180px;">
+      <canvas id="fmtP1" role="img" aria-label="Bar chart showing ROAS by ad format in period 1. Carousel/DPA leads at 3.18x.">Carousel/DPA 3.18x, Image/Static 2.46x, GIF 1.97x, Video 1.50x</canvas>
+    </div>
+  </div>
+  <div class="card">
+    <p class="sec" style="margin-bottom:8px;">Format performance — P2 (ROAS, avg)</p>
+    <div class="chart-wrap" style="height:180px;">
+      <canvas id="fmtP2" role="img" aria-label="Bar chart showing ROAS by ad format in period 2. Video leads at 2.91x.">Video 2.91x, Carousel/DPA 2.70x, Image/Static 1.98x, GIF 0.91x</canvas>
+    </div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <p class="sec" style="margin-bottom:8px;">Product line — P1 (avg ROAS)</p>
+    <div class="chart-wrap" style="height:220px;">
+      <canvas id="prodP1" role="img" aria-label="Horizontal bar chart of product line ROAS in period 1.">All Products DPA 3.30x, Ear Stack 2.13x, Titanium 1.74x, LGD 1.65x</canvas>
+    </div>
+  </div>
+  <div class="card">
+    <p class="sec" style="margin-bottom:8px;">Product line — P2 (avg ROAS)</p>
+    <div class="chart-wrap" style="height:220px;">
+      <canvas id="prodP2" role="img" aria-label="Horizontal bar chart of product line ROAS in period 2.">Mobius 3.47x, Ear Stack 3.15x, Hoops 2.95x, All Products DPA 2.62x</canvas>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+<p class="sec">Top 10 ads by ROAS — P1 (Feb 20–Mar 20, min $200 spend)</p>
+<div class="card" style="margin-bottom:1.5rem;">
+  <div class="ad-row" style="padding-top:0;">
+    <span class="ad-name" style="font-weight:500;color:var(--color-text-secondary);">Ad</span>
+    <span class="ad-meta" style="width:60px;text-align:right;font-weight:500;color:var(--color-text-secondary);">Spend</span>
+    <span class="ad-meta" style="width:36px;text-align:right;font-weight:500;color:var(--color-text-secondary);">Purch.</span>
+    <span class="ad-meta" style="width:44px;text-align:right;font-weight:500;color:var(--color-text-secondary);">CPR</span>
+    <span style="width:80px;flex-shrink:0;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:center;">ROAS</span>
+  </div>
+  <div id="topP1"></div>
+</div>
+
+<p class="sec">Top 10 ads by ROAS — P2 (Mar 20–Apr 19, min $200 spend)</p>
+<div class="card" style="margin-bottom:1.5rem;">
+  <div class="ad-row" style="padding-top:0;">
+    <span class="ad-name" style="font-weight:500;color:var(--color-text-secondary);">Ad</span>
+    <span class="ad-meta" style="width:60px;text-align:right;font-weight:500;color:var(--color-text-secondary);">Spend</span>
+    <span class="ad-meta" style="width:36px;text-align:right;font-weight:500;color:var(--color-text-secondary);">Purch.</span>
+    <span class="ad-meta" style="width:44px;text-align:right;font-weight:500;color:var(--color-text-secondary);">CPR</span>
+    <span style="width:80px;flex-shrink:0;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:center;">ROAS</span>
+  </div>
+  <div id="topP2"></div>
+</div>
+
+<hr class="divider">
+<p class="sec">New creatives launched in P2 — ranked by ROAS (min $300 spend)</p>
+<div class="card" style="margin-bottom:1.5rem;">
+  <div class="ad-row" style="padding-top:0;">
+    <span class="ad-name" style="font-weight:500;color:var(--color-text-secondary);">New creative</span>
+    <span class="ad-meta" style="width:60px;text-align:right;font-weight:500;color:var(--color-text-secondary);">Spend</span>
+    <span class="ad-meta" style="width:36px;text-align:right;font-weight:500;color:var(--color-text-secondary);">Purch.</span>
+    <span class="ad-meta" style="width:44px;text-align:right;font-weight:500;color:var(--color-text-secondary);">CPR</span>
+    <span style="width:80px;flex-shrink:0;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:center;">ROAS</span>
+  </div>
+  <div id="newAds"></div>
+</div>
+
+<hr class="divider">
+<p class="sec">Creative strategy insights</p>
+<div class="insight-grid">
+  <div class="ins">
+    <span class="ins-badge ib-ok">Scale this</span>
+    <p class="ins-title">Stacks DPA carousel is your #1 performer</p>
+    <p class="ins-body">ALL-PRODUCTS_CAROUSEL_STACKS-DPA drove 7.23x ROAS at just $20 CPR in P1 — by far your most efficient buying. In P2 it split into two campaigns and still delivered 5.3x–6.6x. This format + product combination is your most scalable asset.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-ok">Scale this</span>
+    <p class="ins-title">Video surged in P2 — biggest format shift</p>
+    <p class="ins-body">Video went from 1.50x ROAS in P1 to 2.91x in P2. Daily Textures V3 video is your best non-DPA evergreen performer. The rebrand shoot videos (Homepage Teaser, Shoot Pics 2) also performed well at 2.19x and 1.72x with meaningful scale.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-warn">Pause or test</span>
+    <p class="ins-title">GIFs are collapsing in P2</p>
+    <p class="ins-body">GIF format dropped from 1.97x ROAS in P1 to just 0.91x in P2 — below break-even for most AOVs. "You Can't Have Only One" GIF was previously a solid performer. Don't invest new GIF creative budgets until you diagnose the drop.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-ok">New winner</span>
+    <p class="ins-title">Hoops & Gym Set emerged as a strong new creative</p>
+    <p class="ins-body">HOOP-HUGGIES Gym-Set-1A drove 2.42x ROAS with 21 purchases in P2 at $87 CPR. It's a new creative with meaningful spend ($1.8k) — a clear signal to build out more Hoops creative variations and test higher budgets.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-warn">Efficiency dropping</span>
+    <p class="ins-title">Titanium "New Standard" is losing steam</p>
+    <p class="ins-body">Your biggest P1 ad by spend ($21k, 225 purchases) dropped to 1.12x ROAS in P2. CPR jumped from $94 to $124. The new Titanium rebrand creative (TITANIUM-LDP_New-Standard_04-07) is also underperforming at 1.43x. Refresh the Titanium creative concept urgently.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-warn">Watch</span>
+    <p class="ins-title">Lab Grown Diamond spend doubled but ROAS fell</p>
+    <p class="ins-body">LGD spend grew from $4.1k to $10.6k in P2, but ROAS fell from 1.65x to 1.38x. Sparkle & Float videos are not converting well. Evergreen "3 Truths 1 Lie" video is holding at 1.85x but that's thin margin. LGD needs a creative rethink or tighter targeting.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-info">For next batch</span>
+    <p class="ins-title">Mobius is showing early promise — build on it</p>
+    <p class="ins-body">The two Mobius static ads (NewCollection_04-07_01 and _02) hit 3.05x and 3.90x ROAS with low spend. Early signal only, but the product converts well. Prioritise video creative for Mobius in the next batch to test whether it scales.</p>
+  </div>
+  <div class="ins">
+    <span class="ins-badge ib-info">For next batch</span>
+    <p class="ins-title">Secret Iteration and Daily Textures are your evergreen anchors</p>
+    <p class="ins-body">Secret Iteration 1B image and Daily Textures V3 video appear in both periods with consistent performance (2.5–2.8x ROAS). These are proven concepts — develop new iterations with seasonal or rebrand messaging rather than starting from scratch.</p>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const fmtLabels = ['Carousel/DPA','Image/Static','GIF','Video'];
+const fmtP1Roas = [3.18, 2.46, 1.97, 1.50];
+const fmtP2Roas = [2.70, 1.98, 0.91, 2.91];
+
+const prodP1L = ['All Products DPA','Ear Stack','Titanium','Lab Grown Diamond','Hoops & Huggies'];
+const prodP1R = [3.30, 2.13, 1.74, 1.65, 0.89];
+const prodP2L = ['Mobius','Ear Stack','Hoops & Huggies','All Products DPA','Homepage/Brand','Lab Grown Diamond','Titanium'];
+const prodP2R = [3.47, 3.15, 2.95, 2.62, 1.70, 1.38, 1.27];
+
+const topAdsP1 = [
+  {n:'ALL-PRODUCTS_CAROUSEL_STACKS-DPA_2026-01-23',s:6983,p:345,cpr:20.24,roas:7.23,fmt:'Carousel/DPA'},
+  {n:'ALL-JEWELRY_COLLECTION_DPA_2026-01-22',s:378,p:4,cpr:94.41,roas:3.72,fmt:'Collection'},
+  {n:'ALL-PRODUCTS_CAROUSEL_DPA-V2_2025-09-25',s:4577,p:61,cpr:75.03,roas:3.01,fmt:'Carousel/DPA'},
+  {n:'ALL-PRODUCTS_CAROUSEL_DPA_2025-09-25',s:13584,p:263,cpr:51.65,roas:2.84,fmt:'Carousel/DPA'},
+  {n:'EARSTACK-LDP_IMAGE_SecretIteration-1B',s:1101,p:20,cpr:55.03,roas:2.78,fmt:'Image'},
+  {n:'EARSTACK-LDP_IMAGE_Upgrade-Shoot-3c',s:211,p:3,cpr:70.17,roas:2.77,fmt:'Image'},
+  {n:'EARSTACK-LDP_VIDEO_Daily Textures-V3',s:481,p:7,cpr:68.68,roas:2.55,fmt:'Video'},
+  {n:'EARSTACK-LDP_GIF_You Can\'t Have Only One-2',s:1855,p:34,cpr:54.56,roas:2.52,fmt:'GIF'},
+  {n:'ALL-PRODUCTS_COLLECTION_DPA_2025-11-23',s:1411,p:23,cpr:61.34,roas:2.36,fmt:'Collection'},
+  {n:'EARSTACK-LDP_IMAGE_SecretIteration-1A',s:147,p:4,cpr:36.75,roas:4.74,fmt:'Image'},
+];
+
+const topAdsP2 = [
+  {n:'ALL-PRODUCTS_CAROUSEL_STACKS-DPA (Sales Bid Cap)',s:3924,p:164,cpr:23.92,roas:6.58,fmt:'Carousel/DPA'},
+  {n:'ALL-PRODUCTS_CAROUSEL_STACKS-DPA (DPA Bid Cap)',s:6103,p:224,cpr:27.24,roas:5.32,fmt:'Carousel/DPA'},
+  {n:'ALL-PRODUCTS_COLLECTION_DPA_2025-11-23 (copy)',s:693,p:16,cpr:43.32,roas:4.28,fmt:'Collection'},
+  {n:'MOBIUS_STATIC_NewCollection_04-07_02',s:241,p:6,cpr:40.11,roas:3.90,fmt:'Image'},
+  {n:'ALL-PRODUCTS_CAROUSEL_DPA_2025-09-25 (copy)',s:1297,p:24,cpr:54.06,roas:3.41,fmt:'Carousel/DPA'},
+  {n:'ALL-PRODUCTS_COLLECTION_DPA_2025-11-23',s:1249,p:21,cpr:59.45,roas:3.19,fmt:'Collection'},
+  {n:'MOBIUS_STATIC_NewCollection_04-07_01',s:349,p:5,cpr:69.84,roas:3.05,fmt:'Image'},
+  {n:'ALL-PRODUCTS_CAROUSEL_DPA_2025-09-25',s:4134,p:62,cpr:66.68,roas:2.50,fmt:'Carousel/DPA'},
+  {n:'HOOP-HUGGIES-LDP_Image_Gym-Set-1A',s:1829,p:21,cpr:87.09,roas:2.42,fmt:'Image'},
+  {n:'EARSTACK-LDP_VIDEO_Daily Textures-V3',s:2610,p:33,cpr:79.08,roas:2.36,fmt:'Video'},
+];
+
+const newAdsP2 = [
+  {n:'ALL-PRODUCTS_COLLECTION_DPA (copy — Sales VO)',s:693,p:16,cpr:43.32,roas:4.28,fmt:'Collection'},
+  {n:'MOBIUS_STATIC_NewCollection_04-07_02',s:241,p:6,cpr:40.11,roas:3.90,fmt:'Image'},
+  {n:'MOBIUS_STATIC_NewCollection_04-07_01',s:349,p:5,cpr:69.84,roas:3.05,fmt:'Image'},
+  {n:'HOOP-HUGGIES-LDP_Image_Gym-Set-1A (VO)',s:1829,p:21,cpr:87.09,roas:2.42,fmt:'Image'},
+  {n:'HOMEPAGE_VIDEO_SHOOT-TEASER_04-08-2026',s:1910,p:24,cpr:79.56,roas:2.19,fmt:'Video'},
+  {n:'HOOP-HUGGIES-LDP_Image_Gym-Set-1B (Core Line)',s:1023,p:12,cpr:85.21,roas:2.00,fmt:'Image'},
+  {n:'LGD_Video_Sparkle-&-Float-1B (VO)',s:1189,p:13,cpr:91.45,roas:2.12,fmt:'Video'},
+  {n:'HOMEPAGE_VIDEO_SHOOT-PICS-2_04-07-2026',s:1483,p:18,cpr:82.36,roas:1.72,fmt:'Video'},
+  {n:'LGD_Video_Sparkle-&-Float-3B (Core Line)',s:3815,p:24,cpr:158.96,roas:1.24,fmt:'Video'},
+  {n:'TITANIUM-LDP_IMAGE_New-Standard_04-07-2026',s:5311,p:43,cpr:123.51,roas:1.43,fmt:'Image'},
+];
+
+function roasColor(r) {
+  if (r >= 4) return '#0F6E56';
+  if (r >= 2.5) return '#3B6D11';
+  if (r >= 1.8) return '#BA7517';
+  return '#A32D2D';
+}
+
+function fmtBadge(f) {
+  const map = {'Carousel/DPA':'b-blue','Collection':'b-blue','Image':'b-gray','Video':'b-green','GIF':'b-amber','Image/Static':'b-gray'};
+  return `<span class="badge ${map[f]||'b-gray'}">${f}</span>`;
+}
+
+function renderRows(data, el) {
+  const maxRoas = Math.max(...data.map(d=>d.roas));
+  el.innerHTML = data.map(d => `
+    <div class="ad-row">
+      <span class="ad-name" title="${d.n}">${d.n}</span>
+      ${fmtBadge(d.fmt)}
+      <span class="ad-meta" style="width:60px;text-align:right;">$${d.s.toLocaleString()}</span>
+      <span class="ad-meta" style="width:36px;text-align:right;">${d.p}</span>
+      <span class="ad-meta" style="width:44px;text-align:right;">$${d.cpr.toFixed(0)}</span>
+      <div style="width:80px;flex-shrink:0;display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+        <div class="roas-bar-wrap"><div class="roas-bar" style="width:${Math.round(d.roas/maxRoas*100)}%;background:${roasColor(d.roas)};"></div></div>
+        <span style="font-size:12px;font-weight:500;color:${roasColor(d.roas)};min-width:32px;text-align:right;">${d.roas.toFixed(2)}x</span>
+      </div>
+    </div>`).join('');
+}
+
+renderRows(topAdsP1.sort((a,b)=>b.roas-a.roas), document.getElementById('topP1'));
+renderRows(topAdsP2.sort((a,b)=>b.roas-a.roas), document.getElementById('topP2'));
+renderRows(newAdsP2.sort((a,b)=>b.roas-a.roas), document.getElementById('newAds'));
+
+const chartOpts = (horizontal) => ({
+  type: horizontal ? 'bar' : 'bar',
+  options: {
+    indexAxis: horizontal ? 'y' : 'x',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: !horizontal }, ticks: { color: '#888780', font: { size: 11 } } },
+      y: { grid: { display: horizontal }, ticks: { color: '#888780', font: { size: 11 } },
+           ...(horizontal ? {} : { beginAtZero: true }) }
+    }
+  }
+});
+
+new Chart(document.getElementById('fmtP1'), {
+  type: 'bar',
+  data: { labels: fmtLabels, datasets: [{ data: fmtP1Roas, backgroundColor: ['#3266ad','#B5D4F4','#EF9F27','#0F6E56'], borderRadius: 4 }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: { x: { grid: { display: false }, ticks: { color: '#888780', font: { size: 11 } } },
+              y: { grid: { color: 'rgba(136,135,128,0.15)' }, ticks: { color: '#888780', font: { size: 11 }, callback: v => v + 'x' } } } }
+});
+
+new Chart(document.getElementById('fmtP2'), {
+  type: 'bar',
+  data: { labels: fmtLabels, datasets: [{ data: fmtP2Roas, backgroundColor: ['#3266ad','#B5D4F4','#EF9F27','#0F6E56'], borderRadius: 4 }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: { x: { grid: { display: false }, ticks: { color: '#888780', font: { size: 11 } } },
+              y: { grid: { color: 'rgba(136,135,128,0.15)' }, ticks: { color: '#888780', font: { size: 11 }, callback: v => v + 'x' } } } }
+});
+
+new Chart(document.getElementById('prodP1'), {
+  type: 'bar',
+  data: { labels: prodP1L, datasets: [{ data: prodP1R, backgroundColor: '#3266ad', borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: { x: { grid: { color: 'rgba(136,135,128,0.15)' }, ticks: { color: '#888780', font: { size: 10 }, callback: v => v + 'x' } },
+              y: { grid: { display: false }, ticks: { color: '#888780', font: { size: 10 } } } } }
+});
+
+new Chart(document.getElementById('prodP2'), {
+  type: 'bar',
+  data: { labels: prodP2L, datasets: [{ data: prodP2R, backgroundColor: '#0F6E56', borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: { x: { grid: { color: 'rgba(136,135,128,0.15)' }, ticks: { color: '#888780', font: { size: 10 }, callback: v => v + 'x' } },
+              y: { grid: { display: false }, ticks: { color: '#888780', font: { size: 10 } } } } }
+});
+</script>

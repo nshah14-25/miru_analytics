@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebrand customer insights</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f8f6; color: #1a1a18; padding: 2rem; }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #888780; margin-bottom: 1.5rem; }
+  .sec { font-size: 11px; color: #888780; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 10px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .mc { background: #f1efe8; border-radius: 8px; padding: 14px 16px; }
+  .mc-label { font-size: 12px; color: #5f5e5a; margin: 0 0 4px; }
+  .mc-val { font-size: 20px; font-weight: 500; color: #1a1a18; margin: 0; }
+  .mc-sub { font-size: 11px; margin: 3px 0 0; }
+  .up { color: #3B6D11; } .down { color: #A32D2D; } .neu { color: #888780; }
+  .divider { border: none; border-top: 0.5px solid rgba(136,135,128,0.25); margin: 1.5rem 0; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 800px; }
+  th { font-size: 11px; font-weight: 500; color: #888780; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 12px; text-align: right; border-bottom: 0.5px solid #b4b2a9; white-space: nowrap; background: #f9f8f6; }
+  th:first-child { text-align: left; }
+  td { padding: 10px 12px; border-bottom: 0.5px solid rgba(136,135,128,0.2); text-align: right; color: #1a1a18; vertical-align: middle; background: #fff; }
+  td:first-child { text-align: left; font-weight: 500; }
+  tr:last-child td { border-bottom: none; background: #f1efe8; font-weight: 500; }
+  .chg { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 5px; display: inline-block; }
+  .chg-up { background: #EAF3DE; color: #3B6D11; }
+  .chg-dn { background: #FCEBEB; color: #A32D2D; }
+  .chg-neu { background: #F1EFE8; color: #5F5E5A; }
+  .ins { background: #fff; border: 0.5px solid rgba(136,135,128,0.3); border-radius: 12px; padding: 14px 16px; }
+  .ins-badge { font-size: 11px; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; display: inline-block; }
+  .ib-ok { background: #EAF3DE; color: #3B6D11; }
+  .ib-warn { background: #FAEEDA; color: #854F0B; }
+  .ib-info { background: #E6F1FB; color: #0C447C; }
+  .ins-title { font-size: 13px; font-weight: 500; color: #1a1a18; margin: 0 0 5px; }
+  .ins-body { font-size: 12px; color: #5f5e5a; margin: 0; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Customer insights — rebrand launch</h1>
+  <p class="subtitle">Two weeks pre-rebrand (Mar 25–Apr 7) vs two weeks post-rebrand (Apr 8–Apr 21)</p>
+
+  <p class="sec">Overall summary</p>
+  <div class="grid3">
+    <div class="mc">
+      <p class="mc-label">Total revenue — pre</p>
+      <p class="mc-val">$292,663</p>
+      <p class="mc-sub neu">2,111 customers</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">Total revenue — post</p>
+      <p class="mc-val">$296,162</p>
+      <p class="mc-sub up">+$3,499 &nbsp;·&nbsp; +1.2%</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">Total customers — post</p>
+      <p class="mc-val">2,059</p>
+      <p class="mc-sub down">−52 customers &nbsp;·&nbsp; −2.5%</p>
+    </div>
+  </div>
+
+  <p class="sec">Detailed breakdown by segment</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Customers (pre)</th>
+          <th>Customers (post)</th>
+          <th>Cust. change</th>
+          <th>AOV (pre)</th>
+          <th>AOV (post)</th>
+          <th>AOV change</th>
+          <th>Revenue (pre)</th>
+          <th>Revenue (post)</th>
+          <th>Rev. change</th>
+          <th>Rev / customer (pre)</th>
+          <th>Rev / customer (post)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>New customers</td>
+          <td>1,238</td>
+          <td>1,207</td>
+          <td><span class="chg chg-dn">−2.5%</span></td>
+          <td>$141.51</td>
+          <td>$146.17</td>
+          <td><span class="chg chg-up">+3.3%</span></td>
+          <td>$175,582</td>
+          <td>$182,524</td>
+          <td><span class="chg chg-up">+4.0%</span></td>
+          <td>$141.83</td>
+          <td>$151.22</td>
+        </tr>
+        <tr>
+          <td>Returning customers</td>
+          <td>873</td>
+          <td>852</td>
+          <td><span class="chg chg-dn">−2.4%</span></td>
+          <td>$125.46</td>
+          <td>$121.78</td>
+          <td><span class="chg chg-dn">−2.9%</span></td>
+          <td>$117,081</td>
+          <td>$113,638</td>
+          <td><span class="chg chg-dn">−2.9%</span></td>
+          <td>$134.11</td>
+          <td>$133.38</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td>2,111</td>
+          <td>2,059</td>
+          <td><span class="chg chg-dn">−2.5%</span></td>
+          <td>$134.83</td>
+          <td>$135.58</td>
+          <td><span class="chg chg-neu">+0.6%</span></td>
+          <td>$292,663</td>
+          <td>$296,162</td>
+          <td><span class="chg chg-up">+1.2%</span></td>
+          <td>$138.64</td>
+          <td>$143.84</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sec">Revenue mix</p>
+  <div class="grid3" style="margin-bottom:1.5rem;">
+    <div class="mc">
+      <p class="mc-label">New customer revenue share — pre</p>
+      <p class="mc-val">60.0%</p>
+      <p class="mc-sub neu">of total revenue</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">New customer revenue share — post</p>
+      <p class="mc-val">61.6%</p>
+      <p class="mc-sub up">+1.6pts</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">New : returning ratio</p>
+      <p class="mc-val">1.42 : 1</p>
+      <p class="mc-sub neu">Unchanged pre and post</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <p class="sec">Key insights</p>
+  <div class="grid2">
+    <div class="ins">
+      <span class="ins-badge ib-ok">Positive</span>
+      <p class="ins-title">Revenue grew despite fewer customers</p>
+      <p class="ins-body">Total sales are up +1.2% (+$3,499) even with 52 fewer customers post-rebrand. Each customer is now spending more — overall revenue per customer improved from $138.64 to $143.84 (+$5.20). The rebrand is lifting basket value.</p>
+    </div>
+    <div class="ins">
+      <span class="ins-badge ib-ok">Positive</span>
+      <p class="ins-title">New customers are spending significantly more</p>
+      <p class="ins-body">New customer AOV jumped from $141.51 to $146.17 (+3.3%) and revenue per new customer went from $141.83 to $151.22 (+$9.39). The rebrand is attracting new customers with higher purchase intent and willingness to spend.</p>
+    </div>
+    <div class="ins">
+      <span class="ins-badge ib-warn">Watch</span>
+      <p class="ins-title">Returning customers spending less per order</p>
+      <p class="ins-body">AOV for returning customers dropped from $125.46 to $121.78 (−2.9%). Loyal customers may be hesitating post-rebrand. A targeted re-engagement campaign for this segment is worth prioritising now.</p>
+    </div>
+    <div class="ins">
+      <span class="ins-badge ib-warn">Watch</span>
+      <p class="ins-title">Customer volume slightly down across both segments</p>
+      <p class="ins-body">Both new (−2.5%) and returning (−2.4%) customer counts declined by a similar margin — suggesting a broader traffic or conversion dip rather than a loyalty problem specifically. Likely a short-term post-rebrand disruption.</p>
+    </div>
+    <div class="ins">
+      <span class="ins-badge ib-info">Signal</span>
+      <p class="ins-title">New : returning ratio held perfectly stable</p>
+      <p class="ins-body">The ratio of new to returning customers was exactly 1.42:1 both before and after the rebrand. The rebrand hasn't disproportionately hurt either segment — the mix of your customer base is fully intact.</p>
+    </div>
+    <div class="ins">
+      <span class="ins-badge ib-info">Signal</span>
+      <p class="ins-title">New customers now drive 61.6% of revenue</p>
+      <p class="ins-body">Up from 60% pre-rebrand. Combined with higher AOV from new buyers, the new brand positioning is resonating with first-time purchasers — the exact audience you need to grow CLTV from via loyalty programmes.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

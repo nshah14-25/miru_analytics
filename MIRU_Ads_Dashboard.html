@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIRU — Ad Performance Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f2ec;
+    --warm: #e8e0d0;
+    --accent: #b5874a;
+    --accent-light: #d4a96a;
+    --muted: #8a8278;
+    --green: #3d6b4f;
+    --red: #8b3a2e;
+    --amber: #9a6b1f;
+    --surface: #ede8df;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 40px;
+    font-size: 11px;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .header-meta {
+    text-align: right;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+  }
+
+  /* TOP KPI STRIP */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    margin-bottom: 28px;
+  }
+
+  .kpi {
+    background: var(--paper);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .kpi-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .kpi-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .kpi-value.good { color: var(--green); }
+  .kpi-value.bad { color: var(--red); }
+  .kpi-value.warn { color: var(--amber); }
+
+  .kpi-note {
+    font-size: 9px;
+    color: var(--muted);
+  }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(15,14,12,0.15);
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(15,14,12,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-title span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* FUNNEL TABLE */
+  .funnel-card {
+    grid-column: 1 / 3;
+  }
+
+  .funnel-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .funnel-table th {
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(15,14,12,0.15);
+    font-weight: 400;
+  }
+
+  .funnel-table td {
+    padding: 9px 10px;
+    font-size: 10px;
+    border-bottom: 1px solid rgba(15,14,12,0.07);
+    vertical-align: middle;
+  }
+
+  .funnel-table tr:last-child td { border-bottom: none; }
+
+  .funnel-table tr:hover td { background: rgba(181,135,74,0.06); }
+
+  .funnel-level {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .funnel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .level-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .metric-pill {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    margin-right: 3px;
+    margin-bottom: 2px;
+  }
+
+  .pill-primary { background: rgba(15,14,12,0.08); color: var(--ink); }
+  .pill-secondary { background: rgba(15,14,12,0.04); color: var(--muted); }
+
+  .benchmark {
+    color: var(--muted);
+    font-size: 9.5px;
+  }
+
+  /* STATUS BADGES */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .status-good { background: rgba(61,107,79,0.12); color: var(--green); }
+  .status-warn { background: rgba(154,107,31,0.12); color: var(--amber); }
+  .status-bad { background: rgba(139,58,46,0.14); color: var(--red); }
+  .status-na { background: rgba(138,130,120,0.1); color: var(--muted); }
+
+  /* RIGHT COLUMN */
+  .right-col {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* CREATIVE PERFORMANCE */
+  .creative-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(15,14,12,0.07);
+  }
+
+  .creative-row:last-child { border-bottom: none; }
+
+  .creative-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  .creative-meta {
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .bar-wrap {
+    width: 80px;
+    height: 3px;
+    background: rgba(15,14,12,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 5px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  .bar-fill.low { background: var(--red); }
+  .bar-fill.mid { background: var(--amber); }
+  .bar-fill.high { background: var(--green); }
+
+  /* ACTION ITEMS */
+  .action-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(15,14,12,0.07);
+    align-items: flex-start;
+  }
+
+  .action-item:last-child { border-bottom: none; }
+
+  .action-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .icon-pause { background: rgba(139,58,46,0.12); color: var(--red); }
+  .icon-fix { background: rgba(154,107,31,0.12); color: var(--amber); }
+  .icon-scale { background: rgba(61,107,79,0.12); color: var(--green); }
+
+  .action-text {
+    flex: 1;
+  }
+
+  .action-label {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .action-desc {
+    font-size: 10px;
+    color: var(--ink);
+    line-height: 1.5;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+  }
+
+  /* BOTTOM ROW */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* CPM BARS */
+  .cpm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .cpm-label {
+    width: 90px;
+    font-size: 9.5px;
+    color: var(--ink);
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cpm-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: rgba(15,14,12,0.08);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .cpm-bar {
+    height: 100%;
+    border-radius: 1px;
+    background: var(--accent);
+  }
+
+  .cpm-val {
+    width: 38px;
+    text-align: right;
+    font-size: 9.5px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(15,14,12,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  @media print {
+    body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="brand">
+    <div class="brand-name">Maison MIRU</div>
+    <div class="brand-sub">Meta Ads Performance Dashboard — April 2026</div>
+  </div>
+  <div class="header-meta">
+    Data source: Meta Ads Manager<br>
+    Period: Current active campaigns<br>
+    Prepared: April 22, 2026
+  </div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-label">Best ROAS</div>
+    <div class="kpi-value good">3.79</div>
+    <div class="kpi-note">Mobius Sales 04-2026</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Lowest CPM</div>
+    <div class="kpi-value good">$1.48</div>
+    <div class="kpi-note">Awareness | MIRU 04-2026</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Best CTR</div>
+    <div class="kpi-value good">2.45%</div>
+    <div class="kpi-note">Mobius LDP Static</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Worst ROAS</div>
+    <div class="kpi-value bad">0.44</div>
+    <div class="kpi-note">Mobius LDP — pause now</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Highest CPM</div>
+    <div class="kpi-value bad">$69.20</div>
+    <div class="kpi-note">Value Opt. — LGD</div>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- FUNNEL TABLE -->
+  <div class="card funnel-card">
+    <div class="card-title">Funnel Level Monitor <span>what to watch & when</span></div>
+    <table class="funnel-table">
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>Primary KPIs</th>
+          <th>Benchmark</th>
+          <th>MIRU Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="funnel-level">
+              <div class="funnel-dot" style="background:#6b8fa3"></div>
+              <div>
+                <div class="level-name">Awareness</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="metric-pill pill-primary">CPM</span>
+            <span class="metric-pill pill-primary">Reach</span>
+            <span class="metric-pill pill-secondary">Frequency</span>
+          </td>
+          <td class="benchmark">CPM &lt; $10<br>Freq 1.5–3×</td>
+          <td><span class="status status-good">✓ Good</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">CPM $1.48 · Freq 1.12</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="funnel-level">
+              <div class="funnel-dot" style="background:#8fa36b"></div>
+              <div>
+                <div class="level-name">Traffic</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="metric-pill pill-primary">CTR</span>
+            <span class="metric-pill pill-primary">CPC</span>
+            <span class="metric-pill pill-secondary">LP Views</span>
+          </td>
+          <td class="benchmark">CTR &gt; 1.5%<br>CPC &lt; $2</td>
+          <td><span class="status status-warn">⚠ Weak</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">Nap Earrings 0.31–0.49%</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="funnel-level">
+              <div class="funnel-dot" style="background:#a38b6b"></div>
+              <div>
+                <div class="level-name">Engagement</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="metric-pill pill-primary">Eng. Rate</span>
+            <span class="metric-pill pill-secondary">Saves</span>
+            <span class="metric-pill pill-secondary">Shares</span>
+          </td>
+          <td class="benchmark">CTR &gt; 1%<br>Low CPM</td>
+          <td><span class="status status-warn">— No data</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">Set up dedicated ad set</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="funnel-level">
+              <div class="funnel-dot" style="background:#a36b6b"></div>
+              <div>
+                <div class="level-name">Leads</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="metric-pill pill-primary">CPL</span>
+            <span class="metric-pill pill-secondary">Form Rate</span>
+          </td>
+          <td class="benchmark">CPL &lt; $10</td>
+          <td><span class="status status-na">Not running</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">Whitespace opportunity</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="funnel-level">
+              <div class="funnel-dot" style="background:#6b6ba3"></div>
+              <div>
+                <div class="level-name">App Promo</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="metric-pill pill-secondary">Install Rate</span>
+            <span class="metric-pill pill-secondary">CPI</span>
+          </td>
+          <td class="benchmark">N/A</td>
+          <td><span class="status status-na">N/A</span><br><span style="font-size:9px;color:var(--muted);margin-top:3px;display:block">Not applicable</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="funnel-level">
+              <div class="funnel-dot" style="background:#b5874a"></div>
+              <div>
+                <div class="level-name">Sales</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="metric-pill pill-primary">ROAS</span>
+            <span class="metric-pill pill-primary">Purchases</span>
+            <span class="metric-pill pill-secondary">CPA</span>
+          </td>
+          <td class="benchmark">ROAS &gt; 2.0<br>CTR &gt; 1%</td>
+          <td>
+            <span class="status status-good">Mobius 3.79</span><br>
+            <span class="status status-warn" style="margin-top:3px">LGD 1.24</span><br>
+            <span class="status status-bad" style="margin-top:3px">LDP 0.44 ✕</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-col">
+
+    <!-- CREATIVE PERFORMANCE -->
+    <div class="card">
+      <div class="card-title">Creative CTR Performance <span>by ad name</span></div>
+      <div class="creative-row">
+        <div>
+          <div class="creative-name">Mobius Static</div>
+          <div class="creative-meta">Made-With-Love · 214 reach</div>
+          <div class="bar-wrap"><div class="bar-fill high" style="width:100%"></div></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--green)">2.45%</div>
+          <div style="font-size:9px;color:var(--muted)">Best</div>
+        </div>
+      </div>
+      <div class="creative-row">
+        <div>
+          <div class="creative-name">LGD Value Opt.</div>
+          <div class="creative-meta">18,061 reach · ROAS 1.24</div>
+          <div class="bar-wrap"><div class="bar-fill mid" style="width:60%"></div></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--amber)">1.47%</div>
+          <div style="font-size:9px;color:var(--muted)">Scalable</div>
+        </div>
+      </div>
+      <div class="creative-row">
+        <div>
+          <div class="creative-name">Heart Nap Earrings</div>
+          <div class="creative-meta">Retargeting · 1,290–2,948 reach</div>
+          <div class="bar-wrap"><div class="bar-fill mid" style="width:35%"></div></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--amber)">0.54–0.63%</div>
+          <div style="font-size:9px;color:var(--muted)">Monitor</div>
+        </div>
+      </div>
+      <div class="creative-row">
+        <div>
+          <div class="creative-name">Nap Earrings Video</div>
+          <div class="creative-meta">Traffic · 2,626–9,058 reach</div>
+          <div class="bar-wrap"><div class="bar-fill low" style="width:18%"></div></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--red)">0.31–0.45%</div>
+          <div style="font-size:9px;color:var(--muted)">Refresh</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="card">
+      <div class="card-title">Immediate Actions <span>this week</span></div>
+      <div class="action-item">
+        <div class="action-icon icon-pause">✕</div>
+        <div class="action-text">
+          <div class="action-label" style="color:var(--red)">Pause</div>
+          <div class="action-desc">Mobius LDP — ROAS 0.44 is spending at a loss. Stop immediately.</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon icon-fix">↻</div>
+        <div class="action-text">
+          <div class="action-label" style="color:var(--amber)">Refresh Creative</div>
+          <div class="action-desc">Nap Earrings video CTR below 0.5%. Lead with sleep-in or sensitive-skin angle.</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon icon-scale">↑</div>
+        <div class="action-text">
+          <div class="action-label" style="color:var(--green)">Scale</div>
+          <div class="action-desc">Mobius Sales — ROAS 3.79 at $23 CPM. Increase budget before touching anything else.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="card" style="grid-column:1">
+    <div class="card-title">CPM by Campaign <span>cost efficiency</span></div>
+    <div class="cpm-row">
+      <div class="cpm-label">Awareness</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:2%;background:var(--green)"></div></div>
+      <div class="cpm-val" style="color:var(--green)">$1.48</div>
+    </div>
+    <div class="cpm-row">
+      <div class="cpm-label">Nap Earrings</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:11%;background:var(--green)"></div></div>
+      <div class="cpm-val" style="color:var(--green)">$7.11</div>
+    </div>
+    <div class="cpm-row">
+      <div class="cpm-label">Heart Nap Ret.</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:12%"></div></div>
+      <div class="cpm-val">$8.51</div>
+    </div>
+    <div class="cpm-row">
+      <div class="cpm-label">Mobius Sales</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:28%;background:var(--amber)"></div></div>
+      <div class="cpm-val" style="color:var(--amber)">$19.91</div>
+    </div>
+    <div class="cpm-row">
+      <div class="cpm-label">LGD Value Opt.</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:49%;background:var(--red)"></div></div>
+      <div class="cpm-val" style="color:var(--red)">$34.23</div>
+    </div>
+    <div class="cpm-row">
+      <div class="cpm-label">LGD Retarget</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:82%;background:var(--red)"></div></div>
+      <div class="cpm-val" style="color:var(--red)">$56.45</div>
+    </div>
+    <div class="cpm-row">
+      <div class="cpm-label">NAP VIDEO Opt.</div>
+      <div class="cpm-bar-wrap"><div class="cpm-bar" style="width:100%;background:var(--red)"></div></div>
+      <div class="cpm-val" style="color:var(--red)">$69.20</div>
+    </div>
+  </div>
+
+  <div class="card" style="grid-column:2">
+    <div class="card-title">Ad Set Health <span>by campaign</span></div>
+    <table style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr>
+          <th style="font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:5px 8px;border-bottom:1px solid rgba(15,14,12,0.12);font-weight:400">Campaign</th>
+          <th style="font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:5px 8px;border-bottom:1px solid rgba(15,14,12,0.12);font-weight:400">ROAS</th>
+          <th style="font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:5px 8px;border-bottom:1px solid rgba(15,14,12,0.12);font-weight:400">CTR</th>
+          <th style="font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:5px 8px;border-bottom:1px solid rgba(15,14,12,0.12);font-weight:400">Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:8px;font-family:'Cormorant Garamond',serif;font-size:13px;border-bottom:1px solid rgba(15,14,12,0.07)">Mobius Sales</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07);color:var(--green)">3.79</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07)">1.10–1.12%</td>
+          <td style="padding:8px;text-align:center;border-bottom:1px solid rgba(15,14,12,0.07)"><span class="status status-good">Scale</span></td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-family:'Cormorant Garamond',serif;font-size:13px;border-bottom:1px solid rgba(15,14,12,0.07)">LGD Value Opt.</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07);color:var(--amber)">1.24</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07)">1.43–1.47%</td>
+          <td style="padding:8px;text-align:center;border-bottom:1px solid rgba(15,14,12,0.07)"><span class="status status-warn">Monitor</span></td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-family:'Cormorant Garamond',serif;font-size:13px;border-bottom:1px solid rgba(15,14,12,0.07)">MIRU Retargeting</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07);color:var(--muted)">—</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07)">0.41–0.54%</td>
+          <td style="padding:8px;text-align:center;border-bottom:1px solid rgba(15,14,12,0.07)"><span class="status status-warn">Refresh</span></td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-family:'Cormorant Garamond',serif;font-size:13px;border-bottom:1px solid rgba(15,14,12,0.07)">Awareness 04-26</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07);color:var(--muted)">—</td>
+          <td style="padding:8px;text-align:center;font-size:10px;border-bottom:1px solid rgba(15,14,12,0.07)">0.05%</td>
+          <td style="padding:8px;text-align:center;border-bottom:1px solid rgba(15,14,12,0.07)"><span class="status status-na">Expected</span></td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-family:'Cormorant Garamond',serif;font-size:13px">Mobius LDP</td>
+          <td style="padding:8px;text-align:center;font-size:10px;color:var(--red)">0.44</td>
+          <td style="padding:8px;text-align:center;font-size:10px">1.12%</td>
+          <td style="padding:8px;text-align:center"><span class="status status-bad">Pause</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">Maison MIRU — Internal Use Only</div>
+  <div>Meta Ads Manager · April 22, 2026 · All figures from active campaigns</div>
+  <div>Next review: May 1, 2026</div>
+</div>
+
+</body>
+</html>
